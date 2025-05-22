@@ -3,14 +3,14 @@ name: M2-nowifi-6.12
 on:
   workflow_dispatch:
   workflow_call:
-  schedule:
-     - cron: 0 20 * * 2
+  # schedule:
+  #   - cron: 0 20 * * *
 
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: k6.12-nss
   CONFIG_FILE: configs/nowifi612.config
-  DIY_SCRIPT: scripts/roc-script.sh
+  DIY_SCRIPT: scripts/Roc-script.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
@@ -41,14 +41,16 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-          sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
-          sudo -E apt -yqq install dos2unix
-          sudo -E apt -yqq install libfuse-dev
-          sudo -E apt -yqq autoremove --purge
-          sudo -E apt -yqq autoclean
-          sudo -E apt -yqq clean
-          sudo -E systemctl daemon-reload
-          sudo -E timedatectl set-timezone "Asia/Shanghai"
+        docker rmi $(docker images -q)
+        sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android $AGENT_TOOLSDIRECTORY
+        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
+        sudo -E apt-get -y update
+        sudo -E apt-get -y install $(curl -fsSL is.gd/depends_ubuntu_2204)
+        sudo -E systemctl daemon-reload
+        sudo -E apt-get -y autoremove --purge
+        sudo -E apt-get -y clean
+        sudo timedatectl set-timezone "$TZ"
+        # sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)'
 
     - name: Combine Disks(合并磁盘)
       uses: easimon/maximize-build-space@master
@@ -91,7 +93,7 @@ jobs:
 
     - name: Cache Toolchain(缓存工具链)
       if: env.CACHE_TOOLCHAIN == 'true'
-      uses: HiGarfield/cachewrtbuild@main
+      uses: stupidloud/cachewrtbuild@main
       with:
         ccache: false
         mixkey: ${{ env.SOURCE_REPO }}-${{ env.REPO_BRANCH }}-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}
@@ -108,7 +110,7 @@ jobs:
         [ -e files ] && mv files $OPENWRT_PATH/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRT_PATH/.config
         chmod +x $DIY_SCRIPT
-        cd $OPENWRT_PATH/package/
+        cd $OPENWRT_PATH
         $GITHUB_WORKSPACE/$DIY_SCRIPT
 
     - name: Download DL Package(下载DL软件包)
@@ -169,12 +171,12 @@ jobs:
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
           **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}** (6.12内核分支，欢迎下载测试！)
-          ### 📒 zn M2固件信息(无WIFI)
-          - mosdns pw softether cloudflared，acme，ddns-go，zerotier，hp具体详见nowifi612.config。
+          ### 📒 固件信息(无WIFI)
+          - 这是无WIFI，含NSS的6.12内核固件，默认主题为Argon；该固件在LibWrt的基础上，添加了额外的软件包mosdns pw softether cloudflared，acme，ddns-go，zerotier，hp，并添加了若干工具，具体详见nowifi612.config。
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
-          - 🌐 默认地址: **192.168.1.1**
+          - 🌐 默认地址: **192.168.2.1**
           - 🔑 默认密码: 无
           ### 🧊 固件版本
           - 固件内核版本：**${{ env.VERSION_KERNEL }}**
