@@ -22,6 +22,9 @@ function git_sparse_clone() {
 # 添加额外插件
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 
+#luci-app-zerotier
+git clone https://github.com/rufengsuixing/luci-app-zerotier.git package/luci-app-zerotier
+
 # 科学上网插件
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
