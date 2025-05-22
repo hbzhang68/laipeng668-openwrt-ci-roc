@@ -10,7 +10,7 @@ env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: k6.12-nss
   CONFIG_FILE: configs/nowifi612.config
-  DIY_SCRIPT: scripts/Roc-script.sh
+  DIY_SCRIPT: scripts/roc-script.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
