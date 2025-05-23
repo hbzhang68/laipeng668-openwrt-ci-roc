@@ -3,7 +3,7 @@ name: M2-nowifi-6.12
 on:
   workflow_dispatch:
   workflow_call:
-  # schedule:
+   schedule:
      - cron: 0 20 * * *
 
 env:
