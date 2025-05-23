@@ -3,8 +3,8 @@ name: M2-nowifi-6.12
 on:
   workflow_dispatch:
   workflow_call:
-   schedule:
-     - cron: 0 20 * * *
+  # schedule:
+  #   - cron: 0 20 * * *
 
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
