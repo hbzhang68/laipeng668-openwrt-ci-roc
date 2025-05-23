@@ -20,7 +20,9 @@ function git_sparse_clone() {
 }
 
 # 添加额外插件
-git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
+#git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
+git clone --depth=1 https://github.com/kenzok8/small-package/luci-app-poweroff package/luci-app-poweroff
+git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/luci-app-pushbot
 
 #luci-app-zerotier
 git clone https://github.com/rufengsuixing/luci-app-zerotier.git package/luci-app-zerotier
