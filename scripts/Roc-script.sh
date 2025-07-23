@@ -44,6 +44,7 @@ chmod +x package/luci-app-athena-led/root/etc/init.d/athena_led package/luci-app
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
+git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
