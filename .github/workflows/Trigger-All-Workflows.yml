@@ -28,5 +28,8 @@ jobs:
     x86-64-ImmortalWrt:
       uses: ./.github/workflows/x86-64-ImmortalWrt.yml
 
+    RAX3000M-ImmortalWrt:
+      uses: ./.github/workflows/RAX3000M-ImmortalWrt.yml
+
     All-Clean:
       uses: ./.github/workflows/All-Clean.yml
