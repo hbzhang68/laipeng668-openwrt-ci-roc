@@ -1,5 +1,5 @@
 
-name: Taiyi-Libwrt
+name: Taiyi-LibWrt
 
 on:
   workflow_dispatch:
