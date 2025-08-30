@@ -1,5 +1,5 @@
 
-name: Taiyi-Openwrt
+name: Taiyi-OpenWrt
 
 on:
   workflow_dispatch:
