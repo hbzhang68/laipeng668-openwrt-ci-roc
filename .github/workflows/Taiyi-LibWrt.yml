@@ -1,5 +1,5 @@
 
-name: Taiyi-Openwrt
+name: Taiyi-Libwrt
 
 on:
   workflow_dispatch:
@@ -175,7 +175,7 @@ jobs:
         body: |
           **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
           ### 📒 固件信息
-          - 这是开启全功能NSS的6.12内核固件，默认主题为Argon；该固件在Openwrt的基础上，添加了额外的软件包cpufreq、ddns、ttyd、upnp、wolplus、samba4、vlmcsd、aria2、autoreboot、uhttpd、wifischedule、frps、frpc、diskman、hd-idle、banip、acme、arpbind、usb-printer、homeproxy、openlist、adguardhome、oaf、sqm、wireguard、watchcat、3cat（**Taiyi**额外增加了filebrowser、dockerman、gecoosac、lucky），并添加了若干工具，具体详见对应机型的config。
+          - 这是开启全功能NSS的6.12内核固件，默认主题为Argon；该固件在LibWrt的基础上，添加了额外的软件包cpufreq、ddns、ttyd、upnp、wolplus、samba4、vlmcsd、aria2、autoreboot、uhttpd、wifischedule、frps、frpc、diskman、hd-idle、banip、acme、arpbind、usb-printer、homeproxy、openlist、adguardhome、oaf、sqm、wireguard、watchcat、3cat（**Taiyi**额外增加了filebrowser、dockerman、gecoosac、lucky），并添加了若干工具，具体详见对应机型的config。
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
