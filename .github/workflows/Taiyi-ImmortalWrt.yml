@@ -7,8 +7,8 @@ on:
   #   - cron: 0 20 * * *
 
 env:
-  REPO_URL: https://github.com/laipeng668/immortalwrt.git
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/VIKINGYFY/immortalwrt.git
+  REPO_BRANCH: main
   CONFIG_FILE: configs/Taiyi.config
   GENERAL_CONFIG_FILE: configs/General.config
   DIY_SCRIPT: scripts/Roc-script.sh
