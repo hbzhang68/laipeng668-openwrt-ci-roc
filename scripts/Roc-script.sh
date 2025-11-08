@@ -67,7 +67,9 @@ function git_sparse_clone() {
 }
 
 # Go & OpenList & ariang & frp & AdGuardHome & WolPlus & Lucky & wechatpush & OpenAppFilter & 集客无线AC控制器 & 雅典娜LED控制
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+# git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+git_sparse_clone master https://github.com/laipeng668/packages lang/golang
+mv -f package/golang feeds/packages/lang/golang
 git clone --depth=1 https://github.com/sbwml/luci-app-openlist2 package/openlist
 git_sparse_clone ariang https://github.com/laipeng668/packages net/ariang
 git_sparse_clone frp https://github.com/laipeng668/packages net/frp
