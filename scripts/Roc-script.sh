@@ -1,7 +1,18 @@
-# 修改默认IP & 固件名称 & 编译署名
+# 修改默认IP & 固件名称 & 编译署名和时间
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 sed -i "s/hostname='.*'/hostname='Roc'/g" package/base-files/files/bin/config_generate
-sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ Built by Roc')/g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+sed -i "s#_('Firmware Version'), (L\.isObject(boardinfo\.release) ? boardinfo\.release\.description + ' / ' : '') + (luciversion || ''),# \
+            _('Firmware Version'),\n \
+            E('span', {}, [\n \
+                (L.isObject(boardinfo.release)\n \
+                ? boardinfo.release.description + ' / '\n \
+                : '') + (luciversion || '') + ' / ',\n \
+            E('a', {\n \
+                href: 'https://github.com/laipeng668/openwrt-ci-roc/releases',\n \
+                target: '_blank',\n \
+                rel: 'noopener noreferrer'\n \
+                }, [ 'Built by Roc $(date "+%Y-%m-%d %H:%M:%S")' ])\n \
+            ]),#" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 
 # 删除luci-app-attendedsysupgrade在概览页面的升级提示
 rm -rf feeds/luci/applications/luci-app-attendedsysupgrade/htdocs/luci-static/resources/view/status/include/11_upgrades.js
@@ -13,6 +24,7 @@ rm -rf feeds/luci/applications/luci-app-attendedsysupgrade/htdocs/luci-static/re
 # sed -i 's/reg = <0x0 0x4ab00000 0x0 0x[0-9a-f]\+>/reg = <0x0 0x4ab00000 0x0 0x06000000>/' target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6018-512m.dtsi
 
 # 移除要替换的包
+rm -rf feeds/luci/applications/luci-app-argon-config
 rm -rf feeds/luci/applications/luci-app-wechatpush
 rm -rf feeds/luci/applications/luci-app-appfilter
 rm -rf feeds/luci/applications/luci-app-frpc
@@ -44,7 +56,9 @@ mv -f package/luci-app-frps feeds/luci/applications/luci-app-frps
 git_sparse_clone master https://github.com/kenzok8/openwrt-packages adguardhome luci-app-adguardhome
 git_sparse_clone main https://github.com/VIKINGYFY/packages luci-app-wolplus
 git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon feeds/luci/themes/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config feeds/luci/applications/luci-app-argon-config
 git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora feeds/luci/themes/luci-theme-aurora
+git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config feeds/luci/applications/luci-app-aurora-config
 git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
 git clone --depth=1 https://github.com/sbwml/luci-app-openlist2 package/openlist2
 git clone --depth=1 https://github.com/gdy666/luci-app-lucky package/luci-app-lucky
@@ -55,10 +69,22 @@ git clone --depth=1 https://github.com/NONGFAH/luci-app-athena-led package/luci-
 chmod +x package/luci-app-athena-led/root/etc/init.d/athena_led package/luci-app-athena-led/root/usr/sbin/athena-led
 
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/OpenWrt-nikki
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/openwrt-passwall2
 git clone --depth=1 https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-momo package/OpenWrt-momo
 git clone --depth=1 https://github.com/sirpdboy/luci-app-netspeedtest package/luci-app-netspeedtest
+
+### PassWall & OpenClash ###
+
+# 移除 openwrt feeds 自带的核心库
+rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
+
+# 移除 openwrt feeds 过时的LuCI版本
+rm -rf feeds/luci/applications/luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-openclash
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
+git clone --depth=1 https://github.com/vernesong/OpenClash package/luci-app-openclash
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
