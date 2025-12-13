@@ -149,10 +149,7 @@ jobs:
         mv libwrt-qualcommax-ipq60xx-jdcloud_re-cs-07.manifest libwrt-qualcommax-ipq60xx-Taiyi.manifest
         mv -f $OPENWRT_PATH/bin/packages/*/*/*.apk packages
         tar -zcf Taiyi.Packages.tar.gz packages
-        mkdir -p dl
-        mv -f $OPENWRT_PATH/dl/{ath11k*,nss*,qca*} dl
-        tar -zcf Arthur.Athena.Taiyi.DL.tar.gz dl
-        rm -rf packages dl feeds.buildinfo version.buildinfo sha256sums profiles.json
+        rm -rf packages feeds.buildinfo version.buildinfo sha256sums profiles.json
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
 
     - name: Upload Firmware To Artifact(将固件上传到Artifact)
