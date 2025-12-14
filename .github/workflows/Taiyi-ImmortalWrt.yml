@@ -197,3 +197,10 @@ jobs:
         echo "staging: $(du -sh $OPENWRT_PATH/staging_dir | cut -f 1)"
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Delete Old Workflows(删除旧工作流)
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        retain_days: 2
+        keep_minimum_runs: 0
