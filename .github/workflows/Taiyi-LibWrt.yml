@@ -1,4 +1,4 @@
-name: JDCloud-NoWiFi-ImmortalWrt
+name: Taiyi-LibWrt
 
 on:
   workflow_dispatch:
