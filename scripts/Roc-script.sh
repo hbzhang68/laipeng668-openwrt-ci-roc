@@ -303,12 +303,17 @@ if package_enabled luci-app-gecoosac gecoosac; then
   clone_repository https://github.com/laipeng668/luci-app-gecoosac main package/luci-app-gecoosac
 fi
 
+if package_enabled luci-app-partexp partexp; then
+  clone_repository https://github.com/sirpdboy/luci-app-partexp main package/luci-app-partexp
+fi
+
+
 if package_enabled luci-app-athena-led luci-i18n-athena-led-zh-cn; then
   clone_repository https://github.com/NONGFAH/luci-app-athena-led main package/luci-app-athena-led
   chmod +x package/luci-app-athena-led/root/etc/init.d/athena_led package/luci-app-athena-led/root/usr/sbin/athena-led
 fi
 
-### PassWall & OpenClash ###
+### PassWall & OpenClash & Nikki ###
 
 if package_enabled luci-app-passwall luci-app-passwall2; then
   # 移除 OpenWrt Feeds 自带的核心库
@@ -329,6 +334,16 @@ fi
 if package_enabled luci-app-openclash; then
   rm -rf feeds/luci/applications/luci-app-openclash
   clone_repository https://github.com/vernesong/OpenClash master package/luci-app-openclash
+fi
+
+if package_enabled luci-app-nikki; then
+  rm -rf feeds/luci/applications/luci-app-nikki
+  clone_repository https://github.com/nikkinikki-org/OpenWrt-nikki main package/luci-app-nikki
+fi
+
+if package_enabled luci-app-momo; then
+  rm -rf feeds/luci/applications/luci-app-momo
+  clone_repository https://github.com/nikkinikki-org/OpenWrt-momo main package/luci-app-momo
 fi
 
 # 清理 PassWall 的 chnlist 规则文件
