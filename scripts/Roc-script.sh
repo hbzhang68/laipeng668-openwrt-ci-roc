@@ -240,7 +240,7 @@ if package_enabled luci-app-frps; then
   frp_luci_paths+=(applications/luci-app-frps)
 fi
 if [ "${#frp_luci_paths[@]}" -gt 0 ]; then
-  git_sparse_clone frp-toml https://github.com/laipeng668/luci "${frp_luci_paths[@]}"
+  git_sparse_clone frp https://github.com/laipeng668/luci "${frp_luci_paths[@]}"
   for frp_luci_path in "${frp_luci_paths[@]}"; do
     mv "package/$(basename "$frp_luci_path")" "feeds/luci/$frp_luci_path"
   done
@@ -307,7 +307,6 @@ fi
 if package_enabled luci-app-partexp partexp; then
   clone_repository https://github.com/sirpdboy/luci-app-partexp main package/luci-app-partexp
 fi
-
 
 if package_enabled luci-app-athena-led luci-i18n-athena-led-zh-cn; then
   clone_repository https://github.com/NONGFAH/luci-app-athena-led main package/luci-app-athena-led
